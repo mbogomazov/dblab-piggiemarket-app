@@ -1,0 +1,34 @@
+{
+  "root": "apps/dblab-ui-e2e",
+  "sourceRoot": "apps/dblab-ui-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/dblab-ui-e2e/cypress.json",
+        "devServerTarget": "dblab-ui:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "dblab-ui:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "apps/dblab-ui-e2e/**/*.{js,ts}"
+        ]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": [
+    "dblab-ui"
+  ]
+}

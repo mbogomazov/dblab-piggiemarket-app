@@ -1,0 +1,13 @@
+<div mat-dialog-content>
+  <p>Введи данные</p>
+  <mat-form-field appearance="outline">
+    <mat-label>{{data.column.title}}</mat-label>
+    <input matInput [(ngModel)]="data.element[data.column.name]">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="action-btn-container">
+  <button mat-button (click)="close()">Отменить</button>
+  <button mat-button
+          cdkFocusInitial
+          [mat-dialog-close]="data.element">Сохранить</button>
+</div>

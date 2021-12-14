@@ -1,0 +1,14 @@
+table {
+    width: 100%;
+}
+
+.btn-floating {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+}
+
+.trunc-table-btn {
+    width: 100%;
+}

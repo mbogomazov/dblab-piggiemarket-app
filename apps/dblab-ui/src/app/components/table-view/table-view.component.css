@@ -1,0 +1,15 @@
+table {
+    width: 100%;
+}
+
+td {
+    cursor: pointer;
+}
+
+.color-red {
+    color: red;
+}
+
+.delete-btn {
+    margin-left: 8px;
+}

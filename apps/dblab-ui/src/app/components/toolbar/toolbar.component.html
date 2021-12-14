@@ -1,0 +1,42 @@
+<p>
+    <mat-toolbar color="primary">
+      <img class="logo"
+            src="../assets/pig-face.png"
+            alt=""
+            (click)="onAudioPlay()"
+            [ngClass]="{'logo-audio-played': audioPlayed}">
+      <div class="filter-input">
+        <form>
+          <mat-form-field class="example-full-width" appearance="standard">
+            <input matInput
+                    placeholder="Введи запрос"
+                    name="filterString"
+                    [(ngModel)]="filterTableString"
+                    (keyup)="emitNewFilter()">
+            <button class="clear-btn" mat-icon-button matSuffix
+                    (click)="filterTableString = '';emitNewFilter()">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </mat-form-field>
+        </form>
+      </div>
+      <span class="example-spacer"></span>
+      <button mat-icon-button class="example-icon"
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with share icon">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </mat-toolbar>
+</p>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="emitFillAllTables()">Заполнить все таблицы</button>
+  <button mat-menu-item (click)="emitTruncAllTables()">Очистить все таблицы</button>
+  <button mat-menu-item (click)="emitDeleteDb()">Грохнуть БД</button>
+  <button mat-menu-item (click)="emitCreateDb()">Создать БД</button>
+</mat-menu>
+
+
+<audio #audioOption>
+    <source src='../../assets/honk.mp3' type="audio/mp3">
+</audio>

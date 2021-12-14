@@ -1,0 +1,20 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container *ngFor="let column of displayedColumns">
+      <ng-container matColumnDef="{{column.name}}" *ngIf="column.name !== 'deleteRow'; else deleteRowBtn">
+        <th mat-header-cell *matHeaderCellDef> {{column.title}} </th>
+         <td mat-cell *matCellDef="let element" (click)="openDialog(column, element)"> {{element[column.name]}} </td>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #deleteRowBtn>
+      <ng-container matColumnDef="deleteRow">
+        <th mat-header-cell *matHeaderCellDef> Действия </th>
+        <td mat-cell *matCellDef="let element">
+          <button class="delete-btn" mat-icon-button><mat-icon class="color-red" (click)="deleteRow(element)">delete</mat-icon></button>
+        </td>
+      </ng-container>
+    </ng-template>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsIds"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsIds;"></tr>
+</table>

@@ -1,0 +1,62 @@
+{
+  "root": "apps/dblab-back",
+  "sourceRoot": "apps/dblab-back/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:build",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/dblab-back",
+        "main": "apps/dblab-back/src/main.ts",
+        "tsConfig": "apps/dblab-back/tsconfig.app.json",
+        "assets": [
+          "apps/dblab-back/src/assets"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/dblab-back/src/environments/environment.ts",
+              "with": "apps/dblab-back/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "dblab-back:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "apps/dblab-back/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/apps/dblab-back"
+      ],
+      "options": {
+        "jestConfig": "apps/dblab-back/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

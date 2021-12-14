@@ -1,0 +1,30 @@
+<dblab-toolbar
+              (updatedFilterString)="filterCurrentTable($event)"
+              (truncAllTables)="truncAllTables()"
+              (fillAllTables)="fillAllTables()"
+              (createDb)="createDb()"
+              (dropDb)="dropDb()"></dblab-toolbar>
+
+<mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)">
+  <mat-tab *ngFor="let tab of tabs" [label]="tab.title">
+    <dblab-table-view #tableView
+      [displayedColumns]="tab.displayedColumns"
+      [dataSet]="tab.dataSet"
+      (deleteRowEvent)="deleteRow($event)"
+      (updateRowEvent)="updateRow($event)"
+    ></dblab-table-view>
+  </mat-tab>
+</mat-tab-group>
+
+<button mat-stroked-button
+        color="warn"
+        class="trunc-table-btn"
+        *ngIf="tabs[currentTabIndex].dataSet.length"
+        (click)="truncCurrentTable()">Очистить таблицу</button>
+
+<button mat-fab color="primary"
+        aria-label="Add item"
+        class="btn-floating"
+        (click)="openAddRowDialog()">
+  <mat-icon>add</mat-icon>
+</button>

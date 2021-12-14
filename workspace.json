@@ -1,4 +1,9 @@
 {
   "version": 2,
-  "projects": {}
+  "projects": {
+    "dblab-back": "apps/dblab-back",
+    "dblab-ui": "apps/dblab-ui",
+    "dblab-ui-e2e": "apps/dblab-ui-e2e",
+    "dto": "libs/dto"
+  }
 }

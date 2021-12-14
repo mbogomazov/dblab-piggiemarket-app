@@ -1,0 +1,16 @@
+<div mat-dialog-content>
+    <p>Введи данные</p>
+    <ng-container *ngFor="let col of columns">
+      <mat-form-field appearance="outline">
+          <mat-label>{{col.title}}</mat-label>
+          <input matInput
+            [name]="col.name"
+            [(ngModel)]="newRowData[col.name]">
+
+      </mat-form-field>
+    </ng-container>
+  </div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Отменить</button>
+    <button mat-button [mat-dialog-close]="newRowData" cdkFocusInitial>Добавить</button>
+</div>
