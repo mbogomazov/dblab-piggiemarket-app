@@ -1,10 +1,9 @@
 # Лабораторная работа - Piggie Market
 
 ## Предметная область – магазин свинок
+![piggiemarket](https://user-images.githubusercontent.com/23421487/146005615-1b5d5a17-5620-4c11-b3bb-a7932b9b2b2c.gif)
 
 **Пример работы**
-https://user-images.githubusercontent.com/23421487/146004686-45e7903e-058a-452c-970e-cca659a5bd51.mp4
-
 
 
 **Функциональные требования:**
