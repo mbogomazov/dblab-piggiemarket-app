@@ -49,6 +49,5 @@
     "@nrwl/angular:component": {
       "style": "css"
     }
-  },
-  "defaultProject": "dblab-ui"
+  }
 }
