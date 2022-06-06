@@ -21,11 +21,16 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package.json') }}
       - name: Install packages
+        if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         id: install
         run: npm ci
-        continue-on-error: true
-      - name: send log if installing fail
-        if: failure()
+
+  report_install_failed:
+    if: failure()
+    runs-on: ubuntu-latest
+    needs: [install]
+    steps:
+      - name: send log if install fail
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_ID }}
@@ -49,45 +54,48 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package.json') }}
       - name: Lint
         run: npm run lint
-        continue-on-error: true
+
+  report_lint_failed:
+    if: failure()
+    runs-on: ubuntu-latest
+    needs: [lint]
+    steps:
       - name: send log if lint fail
-        if: failure()
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: Lint failed
-      - name: exit after send log
-        run: exit 1
-
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 14
-  #     - name: Test
-  #       run: npm run test
-  #       continue-on-error: true
-  #     - name: send log if installing fail
-  #       if: failure()
-  #       uses: appleboy/telegram-action@master
-  #       with:
-  #         to: ${{ secrets.TELEGRAM_ID }}
-  #         token: ${{ secrets.TELEGRAM_TOKEN }}
-  #         message: Tests failed
   
-  # build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 14
-  #     - name: Build
-  #       id: build
-  #       run: npm run build
+  test:
+    runs-on: ubuntu-latest
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      - name: Use cached node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package.json') }}
+      - name: Test
+        run: npm run test
+
+  report_test_failed:
+    if: failure()
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: send log if tests fail
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: Tests failed
 
   # deploy:
   
