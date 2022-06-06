@@ -1,0 +1,42 @@
+version: '3.3'
+services:
+  dblab-ui:
+    build:
+      dockerfile: Dockerfile.ui
+    ports:
+      - '80:80'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  postgres:
+    image: postgres:14.3
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - '5432:5432'
+    networks:
+      - ci-network
+
+  dblab-back:
+    build:
+      dockerfile: Dockerfile.back
+    environment:
+      - PROD
+      - DB_HOST=${DB_HOST}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    depends_on:
+      - postgres
+    ports:
+      - '3333:3333'
+    networks:
+      - ci-network
+
+networks:
+  ci-network:
+    driver: bridge
+

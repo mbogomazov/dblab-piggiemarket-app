@@ -1,0 +1,4 @@
+FROM nginx:1.21.6
+
+COPY ./nginx.conf /etc/nginx/conf.d/dblab.conf
+COPY dist/apps/dblab-ui /usr/share/nginx/html
