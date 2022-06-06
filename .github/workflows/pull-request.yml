@@ -34,6 +34,7 @@ jobs:
       
   lint:
     runs-on: ubuntu-latest
+    needs: [install]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -56,6 +57,8 @@ jobs:
           to: ${{ secrets.TELEGRAM_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: Lint failed
+      - name: exit after send log
+        run: exit 1
 
   # test:
   #   runs-on: ubuntu-latest
