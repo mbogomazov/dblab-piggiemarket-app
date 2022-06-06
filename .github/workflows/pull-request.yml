@@ -21,6 +21,7 @@ jobs:
       - name: Test
         id: test
         run: npm run test
+        continue-on-error: true
       - name: send log if tests fail
         if: steps.test.outcome == 'failure'
         uses: appleboy/telegram-action@master
@@ -28,6 +29,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: Tests failed
+        run: exit 1
       - name: Build
         id: build
         run: npm run build
