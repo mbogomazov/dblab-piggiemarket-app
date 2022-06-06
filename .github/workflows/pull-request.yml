@@ -119,7 +119,7 @@ jobs:
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           name: github-actions
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
       # - name: Create SSH key
       #   run: |
       #     install -m 600 -D /dev/null ~/.ssh/id_rsa
