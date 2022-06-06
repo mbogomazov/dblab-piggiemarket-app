@@ -5,7 +5,7 @@
   "scripts": {
     "start:ui": "nx serve dblab-ui",
     "start:back": "nx serve dblab-back",
-    "build": "npx nx build",
+    "build": "npx nx run-many --target=build --projects=dblab-ui,dblab-back",
     "test": "npx nx run-many --target=test --projects=dblab-ui,dblab-back",
     "postinstall": "ngcc --properties es2015 browser module main",
     "lint": "npx nx run-many --target=lint --projects=dblab-ui,dblab-back"

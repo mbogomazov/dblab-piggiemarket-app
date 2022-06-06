@@ -13,9 +13,23 @@ jobs:
         with:
           node-version: 14
       - name: Install packages
+        id: install
         run: npm ci
       - name: Lint
+        id: lint
         run: npm run lint
       - name: Test
+        id: test
         run: npm run test
+      - name: send log if tests fail
+        if: steps.test.outcome == 'failure'
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: Tests failed
+      - name: Build
+        id: build
+        run: npm run build
+
       
