@@ -58,7 +58,7 @@ export class AppService {
   async createDb() {
     const client = new Client({
       user: 'root',
-      host: 'localhost',
+      host: process.env.DB_HOST,
       password: 'root',
       port: 5432,
     });
@@ -72,7 +72,7 @@ export class AppService {
     await getConnection().driver.disconnect();
     const client = new Client({
       user: 'root',
-      host: 'localhost',
+      host: process.env.DB_HOST,
       password: 'root',
       port: 5432,
     });

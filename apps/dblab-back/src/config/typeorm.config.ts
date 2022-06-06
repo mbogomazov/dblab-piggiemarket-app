@@ -5,7 +5,7 @@ import { Delivery } from '../model/delivery.model';
 import { Product } from '../model/product.model';
 import { config } from 'dotenv';
 if (!process.env.PROD) {
-  config({ path: './apps/dblab-back/src/config/.env' });
+  config();
 }
 
 const typeOrmConfig: PostgresConnectionOptions = {
