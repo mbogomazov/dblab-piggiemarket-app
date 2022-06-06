@@ -29,6 +29,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: Tests failed
+      - name: exit if tests fail
         run: exit 1
       - name: Build
         id: build
