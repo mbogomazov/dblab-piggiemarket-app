@@ -6,7 +6,7 @@ on:
 
 jobs:
   install:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -27,7 +27,7 @@ jobs:
 
   report_install_failed:
     if: failure()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: [install]
     steps:
       - name: send log if install fail
@@ -38,7 +38,7 @@ jobs:
           message: \`npm ci\` failed
       
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: [install]
     steps:
       - uses: actions/checkout@v3
@@ -57,7 +57,7 @@ jobs:
 
   report_lint_failed:
     if: failure()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: [lint]
     steps:
       - name: send log if lint fail
@@ -68,7 +68,7 @@ jobs:
           message: Lint failed
   
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: [lint]
     steps:
       - uses: actions/checkout@v3
@@ -87,7 +87,7 @@ jobs:
 
   report_test_failed:
     if: failure()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: [test]
     steps:
       - name: send log if tests fail
@@ -97,7 +97,36 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: Tests failed
 
-  # deploy:
+  deploy:
+    runs-on: ubuntu-20.04
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      - name: Use cached node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package.json') }}
+      - name: Build
+        run: npm run build
+
+  report_deploy_failed:
+    if: failure()
+    runs-on: ubuntu-20.04
+    needs: [deploy]
+    steps:
+      - name: send log if deploy fail
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: Deploy failed
+
   
 
       
